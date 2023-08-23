@@ -36,6 +36,14 @@ pipeline {
                 }
             }
         }
+
+        stage('Configure Docker Authentication') {
+            steps {
+                script {
+                    sh 'gcloud auth configure-docker --quiet'
+                }
+            }
+        }
         stage('tag Docker Image') {
             steps {
                 sh 'docker tag  python-runner gcr.io/provana-395314/python-runner'
