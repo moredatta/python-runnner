@@ -9,6 +9,7 @@ pipeline {
     }
     stages {
         stage('Authenticate') {
+         steps {
            withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
          
            sh 'gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}'
@@ -16,8 +17,9 @@ pipeline {
            sh  'gcloud auth configure-docker --quiet'
            sh  'gcloud auth configure-docker asia.gcr.io'
          
+            }
         }
-        }
+        } 
         stage('Login to DockerHub') {
             steps {
                 sh "echo $DOCKERHUB_CREDENTIALS_USR"
