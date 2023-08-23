@@ -27,7 +27,7 @@ pipeline {
                 sh 'rm -f python.zip'
             }
         }
-        stage('Copy Dockerfile') {
+        stage('Copy') {
             steps {
                 sh 'cp Dockerfile python/' // Copy the Dockerfile to the 'python' directory
             }
