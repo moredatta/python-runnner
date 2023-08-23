@@ -8,11 +8,6 @@ pipeline {
       
     }
     stages {
-        stage('Verify version') {
-            steps {
-                sh 'gcloud version'
-            }
-        }
         stage('Authenticate') {
             steps {
                 sh 'gcloud auth activate-service-account --key-file="$GCLOUD_CREDS"'
