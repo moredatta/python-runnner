@@ -21,7 +21,7 @@ pipeline {
         }
         stage('install zip') {
     steps {
-        sh 'apt-get install unzip'
+        sh ' sudo apt-get install unzip'
     }
 }
 
