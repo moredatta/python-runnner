@@ -22,9 +22,7 @@ pipeline {
       stage('Install unzip') {
             steps {
                 script {
-                    def password = 'test'
-                    sh "echo $password | sudo -S apt-get update"
-                    sh "echo $password | sudo -S apt-get install -y unzip"
+                    sh 'apt-get install -y unzip'
                 }
             }
         }
