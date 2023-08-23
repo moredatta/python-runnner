@@ -9,9 +9,14 @@ pipeline {
     }
     stages {
         stage('Authenticate') {
-            steps {
-                sh 'gcloud auth activate-service-account --key-file="$GCLOUD_CREDS"'
-            }
+           withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+         
+           sh 'gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}'
+           
+           sh  'gcloud auth configure-docker --quiet'
+           sh  'gcloud auth configure-docker asia.gcr.io'
+         
+        }
         }
         stage('Login to DockerHub') {
             steps {
@@ -37,13 +42,7 @@ pipeline {
             }
         }
 
-        stage('Configure Docker Authentication') {
-            steps {
-                script {
-                    sh 'gcloud auth configure-docker --quiet'
-                }
-            }
-        }
+        
         stage('tag Docker Image') {
             steps {
                 sh 'docker tag  python-runner gcr.io/provana-395314/python-runner'
