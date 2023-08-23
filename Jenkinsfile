@@ -32,7 +32,7 @@ pipeline {
        stage('Build Docker Image') {
             steps {
                 dir('python') { // Change to the actual path
-                    sh 'docker build -t moredatta574/python-runner .'
+                    sh 'docker build -t python-runner .'
                 }
             }
         }
