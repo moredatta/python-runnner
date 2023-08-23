@@ -19,11 +19,15 @@ pipeline {
                 sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
             }
         }
-        stage('install zip') {
-    steps {
-        sh ' sudo apt-get install unzip'
-    }
-}
+      stage('Install unzip') {
+            steps {
+                script {
+                    def password = 'test'
+                    sh "echo $password | sudo -S apt-get update"
+                    sh "echo $password | sudo -S apt-get install -y unzip"
+                }
+            }
+        }
 
         stage('Unzip File') {
             steps {
