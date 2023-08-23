@@ -32,7 +32,7 @@ pipeline {
                 sh 'cp Dockerfile python/' // Copy the Dockerfile to the 'python' directory
             }
         }
-        stage (copy dockerfile)
+     
         stage('Build Docker Image') {
             steps {
                 // Change to the actual path
