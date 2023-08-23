@@ -2,7 +2,7 @@ pipeline {
   agent any
   environment {
     CLOUDSDK_CORE_PROJECT='provana-395314'
-    CLIENT_EMAIL='jenkins@capable-sphinx-378108.iam.gserviceaccount.com'
+    CLIENT_EMAIL='240781568858-compute@developer.gserviceaccount.com'
     GCLOUD_CREDS=credentials('gcloud-creds')
     DOCKERHUB_CREDENTIALS = credentials('docker')
   	}
