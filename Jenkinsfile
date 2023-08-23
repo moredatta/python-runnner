@@ -36,21 +36,17 @@ pipeline {
                 }
             }
         }
+        stage('tag Docker Image') {
+            steps {
+                sh 'docker tag  python-runner gcr.io/provana-395314/python-runner'
+            }
+        }
         stage('Push Docker Image') {
             steps {
-                sh 'docker push moredatta574/python-runner'
+                sh 'docker push gcr.io/provana-395314/python-runner'
             }
         }
-        stage('Pull Docker Image') {
-            steps {
-                sh 'docker pull moredatta574/python-runner'
-            }
-        }
-        stage('Tag Docker Image') {
-            steps {
-                sh 'docker tag moredatta574/python-runner gcr.io/provana-395314/moredatta574python-runner'
-            }
-        }
+        
         stage('List Images') {
             steps {
                 sh 'gcloud container images list --repository=gcr.io/provana-395314'
@@ -61,9 +57,9 @@ pipeline {
                 sh 'gcloud run services replace service.yaml --platform=managed --region=asia-south1'
             }
         }
-        stage('Allow allUsers') {
+        stage('Deploy Cloud Run Service') {
             steps {
-                sh 'gcloud run services add-iam-policy-binding hello-php --region=asia-south1 --member=allUsers --role=roles/run.invoker'
+                sh "gcloud run deploy $SERVICE_NAME --image=gcr.io/provana-395314/python-runner --platform=managed --region=us-east-1"
             }
         }
     }
