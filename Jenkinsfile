@@ -36,8 +36,8 @@ pipeline {
 
         stage('Unzip File') {
             steps {
-                sh 'unzip -o python.zip'
-                sh 'rm -f python.zip'
+                sh 'unzip -o github_moredatta_python-runnner/python.zip'
+                sh 'rm -f github_moredatta_python-runnner/python.zip'
             }
         }
       
