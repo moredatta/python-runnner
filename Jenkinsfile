@@ -70,7 +70,7 @@ pipeline {
         
         stage('Deploy Cloud Run Service') {
             steps {
-                sh "gcloud run deploy python-runner --image=gcr.io/provana-395314/python-runner1 --platform=managed --region=us-east-1"
+                sh "gcloud run deploy python-runner --image=gcr.io/provana-395314/python-runner1 --platform=managed  --port=8080 --region=us-east-1"
             }
         }
     }
