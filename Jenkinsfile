@@ -26,6 +26,12 @@ pipeline {
                 sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
             }
         }
+
+	stage('Clone Code from Google Source Repository') {
+            steps {
+                sh 'gcloud source repos clone github_moredatta_python-runnner --project=provana-395314'
+            }
+        }
      
 
         stage('Unzip File') {
