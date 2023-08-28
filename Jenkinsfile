@@ -36,8 +36,8 @@ pipeline {
 
         stage('Unzip File') {
             steps {
-                sh 'unzip -o github_moredatta_python-runnner/python.zip'
-                sh 'rm -f github_moredatta_python-runnner/python.zip'
+                sh 'unzip -o python.zip'
+                sh 'rm -f python.zip'
             }
         }
       
@@ -45,7 +45,7 @@ pipeline {
        stage('Build Docker Image') {
             steps {
                 dir('python') { // Change to the actual path
-                    sh 'docker build -t python-runner .'
+                    sh 'docker build -t python-runner1 .'
                 }
             }
         }
@@ -53,12 +53,12 @@ pipeline {
         
         stage('tag Docker Image') {
             steps {
-                sh 'docker tag  python-runner gcr.io/provana-395314/python-runner'
+                sh 'docker tag  python-runner1 gcr.io/provana-395314/python-runner1'
             }
         }
         stage('Push Docker Image') {
             steps {
-                sh 'docker push gcr.io/provana-395314/python-runner'
+                sh 'docker push gcr.io/provana-395314/python-runner1'
             }
         }
         
@@ -67,14 +67,10 @@ pipeline {
                 sh 'gcloud container images list --repository=gcr.io/provana-395314'
             }
         }
-        stage('Install Service') {
-            steps {
-                sh 'gcloud run services replace service.yaml --platform=managed --region=asia-south1'
-            }
-        }
+        
         stage('Deploy Cloud Run Service') {
             steps {
-                sh "gcloud run deploy $SERVICE_NAME --image=gcr.io/provana-395314/python-runner --platform=managed --region=us-east-1"
+                sh "gcloud run deploy python-runner --image=gcr.io/provana-395314/python-runner1 --platform=managed --region=us-east-1"
             }
         }
     }
