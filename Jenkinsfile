@@ -29,7 +29,7 @@ pipeline {
 
 	stage('Clone Code from Google Source Repository') {
             steps {
-                sh 'gcloud source repos clone github_moredatta_python-runnner --project=provana-395314'
+                sh 'git clone https://github.com/moredatta/python-runnner'
             }
         }
      
