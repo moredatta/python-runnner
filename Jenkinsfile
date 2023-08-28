@@ -27,11 +27,11 @@ pipeline {
             }
         }
 
-	stage('Clone Code from Google Source Repository') {
-            steps {
-                sh 'git clone https://github.com/moredatta/python-runnner'
-            }
-        }
+	//stage('Clone Code from Google Source Repository') {
+        //    steps {
+         //       sh 'git clone https://github.com/moredatta/python-runnner'
+         //   }
+    //    }
      
 
         stage('Unzip File') {
