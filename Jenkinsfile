@@ -2,9 +2,13 @@ pipeline {
     agent any
     environment {
         CLOUDSDK_CORE_PROJECT = 'provana-395314'
-        CLIENT_EMAIL = '240781568858-compute@developer.gserviceaccount.com'
+        CLIENT_EMAIL = 'python-source@provana-395314.iam.gserviceaccount.com'
         GCLOUD_CREDS = credentials('gcloud-creds')
         DOCKERHUB_CREDENTIALS = credentials('docker')
+	SERVICE_NAME = "tunner"
+        REGION = "us-central1"
+        //IMAGE_NAME = "python-runnerr"
+        REGISTRY_HOSTNAME = "asia.gcr.io"
       
     }
     stages {
@@ -68,11 +72,25 @@ pipeline {
             }
         }
         
-        stage('Deploy Cloud Run Service') {
-            steps {
-                sh "gcloud run deploy python-runner --image=gcr.io/provana-395314/python-runner1 --platform=managed  --port=8080 --region=us-east-1"
-            }
-        }
+        //stage('Deploy Cloud Run Service') {
+           // steps {
+        //        sh "gcloud run deploy python-runner --image=gcr.io/provana-395314/python-runner1 --platform=managed  --port=8080 --region=us-east-1"
+          //  }
+     //   }
+
+	 stage('Deploy to Cloud Run') {
+      steps {
+        // Deploy the Docker image to Cloud Run
+sh '
+          gcloud run deploy ${SERVICE_NAME} \
+            --image=${REGISTRY_HOSTNAME}/${PROJECT_ID}/${IMAGE_NAME} \
+            --platform=managed \
+            --region=${REGION} \
+            --project="provana-395314"
+            --allow-unauthenticated
+        '
+      }
+    }   
     }
     post {
         always {
